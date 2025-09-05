@@ -21,8 +21,6 @@ class GetUsersUserIdRouteSpec extends BaseRouteSpec {
         .assert { ctx =>
           val response = ctx.performRequest(allRoutes)
 
-          println(response.body)
-
           response.body.id should beEqualTo(1L)
         },
       onRequest(pathParameters = (999L))
@@ -33,6 +31,11 @@ class GetUsersUserIdRouteSpec extends BaseRouteSpec {
           response.body should beEqualTo {
             ErrorResponse("User with the specified ID does not exist", "USER_NOT_FOUND")
           }
+          // Does not work (why?)
+          //response.body.message should beEqualTo("User with the specified ID does not exist")
+          //[error]      org.specs2.specification.dsl.mutable.ExampleDsl1$BlockExample@3ded6269: org.specs2.specification.dsl.mutable.ExampleDsl1$BlockExample != User with the specified ID does not exist: java.lang.String (GetUsersUserIdRouteSpec.scala:35)
+          //[error] Actual:   org.specs2.specification.dsl.mutable.ExampleDsl1$BlockExample@3ded6269
+          //[error] Expected: User with the specified ID does not exist
         }
     )
   )
